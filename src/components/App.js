@@ -49,22 +49,13 @@ class App extends Component {
         { name: 'Golem', img: gnt }
       ]
 
-      /* search for chosen cryptocurrencies, then add them to the state */
-      //get ccurency from ccArray 
-      for(let j=0; j<ccArray.length; j++){
-        //get ccurrency from API
-        for (let i=0; i<coins.length; i++){
-          //if current ccurrency API == current ccurrency from ccArray
-          if(coins[i].name === ccArray[j].name){
-            //add img to the ccurrency API data
-            coins[i]['img'] = ccArray[j].img
-            //set state with updated data
-            this.setState({
-              ccData: [...this.state.ccData, coins[i]]
-            })
-          }
-        }
+      /* search for chosen cryptocurrencies, add their image, and then add them to the state */      
+      for(let ccoin of ccArray){
+          let coin = coins.find( coin => coin.name === ccoin.name );
+          coin.img = ccoin.img;
+          this.setState( {ccData: [...this.state.ccData, coin]} );
       }
+      
       //sort ccurrencies by rank
       this.setState({
         ccData: this.state.ccData.sort((a,b) => a.rank-b.rank)
